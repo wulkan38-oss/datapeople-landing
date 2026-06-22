@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datapeople — HR-аналитика, которая видит риск раньше вас</title>
+<meta name="description" content="Datapeople собирает данные о сотрудниках в одном месте и показывает, где назревает уход или выгорание — пока ещё есть время среагировать.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#FF69B4;
+    --secondary:#FFB6C1;
+    --accent:#FF1493;
+    --bg:#FFF0F5;
+    --text:#4A4A4A;
+
+    --gradient-primary: linear-gradient(135deg, #FF69B4, #FF1493);
+    --gradient-bg: linear-gradient(135deg, #FFF0F5, #FFE4F0);
+
+    --shadow-default: 0 8px 32px rgba(255,105,180,0.15);
+    --shadow-hover: 0 16px 48px rgba(255,105,180,0.25);
+
+    --radius-card:16px;
+    --radius-button:12px;
+    --radius-section:24px;
+
+    --font-display:'Comfortaa', sans-serif;
+    --font-body:'Nunito', -apple-system, sans-serif;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+  body{
+    background:var(--gradient-bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img,svg{ display:block; max-width:100%; }
+
+  a{ color:inherit; }
+
+  ::selection{ background:var(--accent); color:#fff; }
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--font-body);
+    font-size:16px;
+    font-weight:700;
+    text-decoration:none;
+    border:1px solid transparent;
+    border-radius:var(--radius-button);
+    padding:13px 24px;
+    cursor:pointer;
+    box-shadow:var(--shadow-default);
+    transition:all 0.3s ease;
+  }
+  .btn-primary{
+    background:var(--gradient-primary);
+    color:#fff;
+  }
+  .btn-primary:hover{
+    background:linear-gradient(135deg, #FF1493, #C71585);
+    box-shadow:var(--shadow-hover);
+    transform:translateY(-1px);
+  }
+  .btn-ghost{
+    background:transparent;
+    color:var(--text);
+    border-color:var(--secondary);
+    box-shadow:none;
+  }
+  .btn-ghost:hover{ border-color:var(--accent); background:rgba(255,105,180,.06); }
+  .btn-block{ width:100%; justify-content:center; padding:16px 24px; font-size:16px; }
+
+  /* ---------- header ---------- */
+  .site-header{
+    position:sticky;
+    top:0;
+    z-index:40;
+    background:rgba(255,240,245,.85);
+    backdrop-filter:saturate(140%) blur(6px);
+    box-shadow:0 4px 20px rgba(255,105,180,.1);
+  }
+  .site-header .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:14px;
+    padding-bottom:14px;
+  }
+  .wordmark{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    text-decoration:none;
+  }
+  .logo-mark{
+    width:80px;
+    height:80px;
+    flex:none;
+  }
+  .wordmark-text{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:22px;
+    letter-spacing:-.01em;
+    background:var(--gradient-primary);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:var(--accent);
+  }
+  .wordmark-text sup{
+    font-family:var(--font-body);
+    font-size:10px;
+    font-weight:700;
+    color:var(--accent);
+    vertical-align:super;
+    margin-left:2px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:76px 0 96px;
+  }
+  .hero-grid-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+    gap:64px;
+    align-items:center;
+  }
+  .eyebrow{
+    font-family:var(--font-body);
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:rgba(74,74,74,.75);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--gradient-primary);
+    flex:none;
+  }
+  h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(34px, 4.4vw, 64px);
+    line-height:1.15;
+    letter-spacing:-.01em;
+    color:var(--text);
+    max-width:16ch;
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--accent);
+  }
+  .hero-sub{
+    margin-top:26px;
+    font-size:17.5px;
+    color:var(--text);
+    max-width:42ch;
+  }
+  .hero-actions{
+    margin-top:36px;
+    display:flex;
+    align-items:center;
+    gap:26px;
+    flex-wrap:wrap;
+  }
+  .link-jump{
+    font-family:var(--font-body);
+    font-size:14px;
+    font-weight:600;
+    text-decoration:none;
+    color:rgba(74,74,74,.75);
+    border-bottom:1px solid var(--secondary);
+    padding-bottom:2px;
+    transition:all 0.3s ease;
+  }
+  .link-jump:hover{ color:var(--accent); border-color:var(--accent); }
+
+  /* ---------- risk grid (signature element) ---------- */
+  .risk-panel{ position:relative; min-width:0; }
+  .risk-panel-label{
+    font-family:var(--font-body);
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.02em;
+    color:rgba(74,74,74,.75);
+    text-transform:uppercase;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:space-between;
+  }
+  .risk-grid{
+    display:grid;
+    grid-template-columns:repeat(8, minmax(0,1fr));
+    gap:5px;
+    background:rgba(255,255,255,.6);
+    border:1px solid rgba(255,105,180,.18);
+    border-radius:var(--radius-card);
+    padding:16px;
+    box-shadow:var(--shadow-default);
+  }
+  .cell{
+    aspect-ratio:1;
+    border-radius:12px;
+    background:var(--secondary);
+    opacity:.35;
+  }
+  .cell.is-risk{
+    background:var(--gradient-primary);
+    opacity:1;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .cell.is-risk{ animation:pulse 2.6s ease-in-out infinite; }
+    .cell.is-risk:nth-of-type(2n){ animation-delay:.6s; }
+    .cell.is-risk:nth-of-type(3n){ animation-delay:1.1s; }
+  }
+  @keyframes pulse{
+    0%, 100%{ opacity:1; }
+    50%{ opacity:.45; }
+  }
+  .risk-note{
+    grid-column:6 / 9;
+    grid-row:3 / 5;
+    background:var(--gradient-primary);
+    color:#fff;
+    border-radius:var(--radius-card);
+    padding:14px 15px;
+    align-self:stretch;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:4px;
+    box-shadow:var(--shadow-hover);
+  }
+  .risk-note-tag{
+    font-family:var(--font-body);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.03em;
+    color:#fff;
+    text-transform:uppercase;
+  }
+  .risk-note p{
+    font-size:12.5px;
+    line-height:1.4;
+    color:rgba(255,255,255,.92);
+  }
+  @media (max-width:640px){
+    .risk-note{ grid-column:1 / -1; grid-row:auto; margin-top:5px; }
+  }
+
+  /* PLACEHOLDER MASCOT "Юни": hand-built inline SVG stand-in, pending real
+     mascot illustration/asset from design studio per brandbook
+     (pink unicorn, rainbow mane, "Chief Happiness Officer") */
+  .mascot-uni{
+    position:absolute;
+    right:-18px;
+    bottom:-26px;
+    width:140px;
+    height:140px;
+    z-index:5;
+    filter:drop-shadow(0 8px 20px rgba(255,20,147,.25));
+  }
+
+  /* ---------- sections shared ---------- */
+  section{ padding:88px 0; }
+  .section-head{
+    max-width:46ch;
+    margin-bottom:52px;
+  }
+  .section-head h2{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(28px, 3vw, 36px);
+    letter-spacing:-.01em;
+  }
+  .section-head p{
+    margin-top:14px;
+    color:rgba(74,74,74,.75);
+    font-size:16px;
+  }
+
+  /* ---------- in-action photo ---------- */
+  .in-action-figure{
+    border-radius:var(--radius-section);
+    overflow:hidden;
+    background:#fff;
+    box-shadow:var(--shadow-default);
+  }
+  .in-action-figure img{
+    width:100%;
+    height:auto;
+  }
+  .in-action-figure figcaption{
+    padding:22px 30px;
+    font-size:14.5px;
+    color:rgba(74,74,74,.75);
+  }
+
+  /* ---------- roi calculator ---------- */
+  .roi{ background:rgba(255,255,255,.4); }
+  .roi-grid{
+    display:grid;
+    grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
+    gap:48px;
+    align-items:start;
+  }
+  .roi-card{
+    background:#fff;
+    border-radius:var(--radius-card);
+    box-shadow:var(--shadow-default);
+    padding:36px;
+  }
+  .roi-field{ margin-bottom:18px; }
+  .roi-field label{
+    display:block;
+    font-family:var(--font-body);
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.01em;
+    text-transform:uppercase;
+    color:rgba(74,74,74,.75);
+    margin-bottom:8px;
+  }
+  .roi-field input{
+    width:100%;
+    font-family:var(--font-body);
+    font-size:15px;
+    background:#FFFAFC;
+    border:1px solid var(--secondary);
+    border-radius:var(--radius-button);
+    padding:12px 14px;
+    color:var(--text);
+  }
+  .roi-field input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(255,105,180,.15);
+    outline:none;
+  }
+  .roi-result{
+    background:var(--gradient-primary);
+    color:#fff;
+    border-radius:var(--radius-card);
+    box-shadow:var(--shadow-hover);
+    padding:36px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+  .roi-result-row .roi-label{
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.85);
+    margin-bottom:4px;
+  }
+  .roi-result-row .roi-number{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(24px, 3vw, 32px);
+    letter-spacing:-.01em;
+  }
+  .roi-result-row.roi-savings .roi-number{ font-size:clamp(30px, 3.6vw, 40px); }
+  .roi-note{
+    font-size:12.5px;
+    color:rgba(255,255,255,.8);
+    line-height:1.5;
+  }
+  .roi-print-btn{
+    align-self:flex-start;
+    background:rgba(255,255,255,.16);
+    color:#fff;
+    border-color:rgba(255,255,255,.5);
+    box-shadow:none;
+  }
+  .roi-print-btn:hover{ background:rgba(255,255,255,.26); }
+  #roiPrintSheet{ display:none; }
+  @media print{
+    body.printing-roi *{ visibility:hidden; }
+    body.printing-roi #roiPrintSheet, body.printing-roi #roiPrintSheet *{ visibility:visible; }
+    body.printing-roi #roiPrintSheet{
+      display:block;
+      position:absolute;
+      top:0; left:0;
+      width:100%;
+      padding:40px;
+    }
+    #roiPrintSheet h2{ font-family:var(--font-display); margin-bottom:18px; }
+    #roiPrintSheet .roi-print-row{ margin-bottom:12px; font-size:16px; }
+    #roiPrintSheet .roi-print-row strong{ display:block; font-size:22px; }
+  }
+
+  /* ---------- integrations ---------- */
+  .integrations-badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .integration-badge{
+    background:#fff;
+    border:1px solid rgba(255,105,180,.25);
+    border-radius:var(--radius-button);
+    padding:12px 20px;
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:14.5px;
+    color:var(--text);
+    box-shadow:var(--shadow-default);
+  }
+  .integrations-foot{
+    margin-top:24px;
+    font-size:14.5px;
+    color:rgba(74,74,74,.75);
+  }
+
+  /* ---------- why us ---------- */
+  .why-list{
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0,1fr));
+    gap:24px;
+  }
+  .why-card{
+    background:#fff;
+    border-radius:var(--radius-card);
+    box-shadow:var(--shadow-default);
+    padding:26px 22px;
+  }
+  .why-card .why-tag{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:15px;
+    color:var(--accent);
+    margin-bottom:8px;
+    display:block;
+  }
+  .why-card p{ font-size:14px; color:var(--text); }
+  .pricing-anchor{
+    margin-top:36px;
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:15px;
+    color:var(--text);
+  }
+
+  /* ---------- benefits ---------- */
+  .benefit-list{
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0,1fr));
+    gap:24px;
+  }
+  .benefit-card{
+    background:#fff;
+    border-radius:var(--radius-card);
+    box-shadow:var(--shadow-default);
+    padding:30px 26px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    transition:all 0.3s ease;
+  }
+  .benefit-card:hover{
+    box-shadow:var(--shadow-hover);
+    transform:translateY(-4px);
+  }
+  .benefit-tag{
+    font-family:var(--font-body);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.03em;
+    color:var(--accent);
+  }
+  .benefit-card h3{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:22px;
+    line-height:1.3;
+  }
+  .benefit-card p{
+    font-size:14.5px;
+    color:var(--text);
+  }
+
+  /* ---------- proof ---------- */
+  .proof{
+    background:var(--gradient-primary);
+    color:#fff;
+  }
+  .proof .wrap{
+    display:grid;
+    grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
+    gap:60px;
+    align-items:center;
+  }
+  .proof-stat .number{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(64px, 9vw, 104px);
+    line-height:1;
+    letter-spacing:-.02em;
+  }
+  .proof-stat .number sup{
+    font-size:.35em;
+    color:rgba(255,255,255,.85);
+    vertical-align:super;
+    margin-left:4px;
+  }
+  .proof-stat .caption{
+    margin-top:10px;
+    font-family:var(--font-body);
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.02em;
+    color:rgba(255,255,255,.85);
+    max-width:24ch;
+  }
+  blockquote{
+    border-left:3px solid rgba(255,255,255,.5);
+    padding-left:26px;
+  }
+  blockquote p{
+    font-family:var(--font-body);
+    font-size:clamp(19px, 2.1vw, 23px);
+    line-height:1.5;
+    font-weight:500;
+  }
+  .attribution{
+    margin-top:18px;
+    font-family:var(--font-body);
+    font-size:13px;
+    color:rgba(255,255,255,.85);
+  }
+  .attribution strong{ color:#fff; font-weight:700; }
+
+  /* ---------- cta / form ---------- */
+  .cta-form .wrap{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,.9fr);
+    gap:70px;
+    align-items:start;
+  }
+  .form-card{
+    background:#fff;
+    border-radius:var(--radius-card);
+    box-shadow:var(--shadow-default);
+    padding:40px;
+  }
+  .field{ margin-bottom:18px; }
+  .field label{
+    display:block;
+    font-family:var(--font-body);
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.01em;
+    text-transform:uppercase;
+    color:rgba(74,74,74,.75);
+    margin-bottom:8px;
+  }
+  .field input{
+    width:100%;
+    font-family:var(--font-body);
+    font-size:15px;
+    background:#FFFAFC;
+    border:1px solid var(--secondary);
+    border-radius:var(--radius-button);
+    padding:12px 14px;
+    color:var(--text);
+    transition:all 0.3s ease;
+  }
+  .field input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(255,105,180,.15);
+    outline:none;
+  }
+  .form-foot{
+    margin-top:6px;
+    font-size:13px;
+    color:rgba(74,74,74,.75);
+    text-align:center;
+  }
+
+  /* ---------- footer ---------- */
+  footer{ padding:48px 0; }
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .footer-tag{
+    font-size:14px;
+    color:rgba(74,74,74,.75);
+    max-width:38ch;
+  }
+  .footer-meta{
+    font-family:var(--font-body);
+    font-size:13px;
+    color:rgba(74,74,74,.75);
+  }
+
+  /* ---------- scroll reveal ---------- */
+  /* hidden state only applies once JS confirms it can reveal it again (see inline script in head) */
+  .reveal{ opacity:1; transform:none; }
+  .js-reveal .reveal{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .js-reveal .reveal.is-visible{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .js-reveal .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .hero-grid-layout{ grid-template-columns:1fr; gap:48px; }
+    .benefit-list{ grid-template-columns:repeat(2, 1fr); gap:20px; }
+    .roi-grid{ grid-template-columns:1fr; gap:32px; }
+    .why-list{ grid-template-columns:repeat(2, 1fr); gap:20px; }
+    .proof .wrap{ grid-template-columns:1fr; gap:40px; }
+    .cta-form .wrap{ grid-template-columns:1fr; gap:40px; }
+    .mascot-uni{ position:static; width:120px; height:120px; margin:24px auto 0; right:auto; bottom:auto; }
+  }
+  @media (max-width:640px){
+    .wrap{ padding:0 20px; }
+    .hero{ padding:52px 0 64px; }
+    section{ padding:64px 0; }
+    .benefit-list{ grid-template-columns:1fr; gap:16px; }
+    .why-list{ grid-template-columns:1fr; gap:16px; }
+    h1{ max-width:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="#top">
+      <img class="logo-mark" src="datapeople-logo.png" alt="Datapeople">
+      <span class="wordmark-text">Datapeople<sup>HR</sup></span>
+    </a>
+    <a class="btn btn-primary" href="#form">Оставить заявку</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid-layout">
+      <div>
+        <p class="eyebrow">HR-аналитика · для компаний от 100 человек</p>
+        <h1>Кому из команды нужна поддержка, вы узнаете <em>за 21 день</em> до того, как станет поздно.</h1>
+        <p class="hero-sub">Datapeople собирает данные о сотрудниках в одном месте и показывает, кому из команды нужна поддержка, — пока у руководителя ещё есть время помочь.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#form">Оставить заявку</a>
+          <a class="link-jump" href="#benefits">Как это работает ↓</a>
+        </div>
+      </div>
+
+      <div class="risk-panel">
+        <p class="risk-panel-label">
+          <span>Отдел продаж · 64 человека</span>
+          <span>срез на сегодня</span>
+        </p>
+        <div class="risk-grid" id="riskGrid" aria-hidden="true">
+          <!-- cells injected by script -->
+          <div class="risk-note">
+            <span class="risk-note-tag">Сигнал внимания · 87%</span>
+            <p>Система заметила сигнал 21 день назад — у руководителя было время поговорить с человеком на встрече 1-на-1.</p>
+          </div>
+        </div>
+        <svg class="mascot-uni" viewBox="0 0 140 140" role="img" aria-label="Юни — талисман Datapeople, дружелюбный единорог">
+          <ellipse cx="70" cy="90" rx="38" ry="30" fill="#FFB6C1"/>
+          <rect x="45" y="105" width="10" height="22" rx="5" fill="#FFB6C1"/>
+          <rect x="85" y="105" width="10" height="22" rx="5" fill="#FFB6C1"/>
+          <path d="M32 80 Q20 90 28 105 Q18 108 22 120" stroke="#FF69B4" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <circle cx="95" cy="55" r="26" fill="#FFC2D1"/>
+          <polygon points="78,32 85,18 88,34" fill="#FF96B9"/>
+          <polygon points="95,12 102,34 88,34" fill="#FFD166"/>
+          <path d="M70 35 Q60 45 65 60 Q55 65 60 80" stroke="#FF69B4" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M75 30 Q65 42 70 56" stroke="#B388FF" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M80 28 Q72 40 76 52" stroke="#6EC6FF" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M85 28 Q80 38 83 48" stroke="#FFD166" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <circle cx="84" cy="62" r="4" fill="#FF69B4" opacity=".4"/>
+          <path d="M88 55 Q92 59 96 55" stroke="#4A4A4A" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M90 64 Q98 70 106 63" stroke="#4A4A4A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="in-action" id="in-action">
+    <div class="wrap">
+      <figure class="in-action-figure reveal">
+        <img src="images/team-product.png" alt="Сотрудники компании смотрят на дашборд HR-аналитики Datapeople на экране ноутбука" loading="lazy">
+        <figcaption>Сигналы внимания видно прямо в дашборде Datapeople — на встрече 1-на-1 или в общем чате с командой.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="benefits" id="benefits">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Что показывает Datapeople</h2>
+        <p>Не дашборд ради дашборда — конкретные ответы на вопросы, которые обычно всплывают слишком поздно.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="benefit-list">
+        <div class="benefit-card reveal">
+          <span class="benefit-tag">Текучка</span>
+          <h3>Текучка переведена в рубли</h3>
+          <p>Вместо процента в квартальном отчёте — сумма, в которую вам обходится каждый ушедший сотрудник: подбор, ввод в должность, потерянная скорость команды.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <span class="benefit-tag">Внимание заранее</span>
+          <h3>Кому нужна поддержка — видно заранее</h3>
+          <p>Модель замечает сотрудников, которым стоит уделить внимание, по реальным сигналам: нагрузке, активности, обратной связи — за недели до того, как будет поздно.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <span class="benefit-tag">Забота</span>
+          <h3>Забота вовремя — лучшая профилактика</h3>
+          <p>Datapeople подсказывает, когда команде нужна передышка, — чтобы поддержать людей заранее, а не разбираться с последствиями.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <span class="benefit-tag">Данные</span>
+          <h3>Все данные о людях — в одном месте</h3>
+          <p>Без сверки цифр между четырьмя системами и без расхождений в методологии между отделами. Один источник правды о команде.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="roi" id="roi">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Сколько вы теряете на текучке прямо сейчас</h2>
+        <p>Введите свои цифры — калькулятор покажет потери, стоимость Datapeople и потенциальную экономию.</p>
+      </div>
+      <div class="roi-grid">
+        <div class="roi-card reveal">
+          <div class="roi-field">
+            <label for="roiEmployees">Количество сотрудников</label>
+            <input id="roiEmployees" type="number" min="1" step="1" value="2000" inputmode="numeric">
+          </div>
+          <div class="roi-field">
+            <label for="roiSalary">Средняя зарплата, ₽/мес</label>
+            <input id="roiSalary" type="number" min="1" step="1000" value="90000" inputmode="numeric">
+          </div>
+          <div class="roi-field">
+            <label for="roiTurnover">Текущая текучка, %</label>
+            <input id="roiTurnover" type="number" min="0" max="100" step="1" value="18" inputmode="numeric">
+          </div>
+        </div>
+        <div class="roi-result reveal">
+          <div class="roi-result-row">
+            <p class="roi-label">Сейчас текучка стоит вам</p>
+            <p class="roi-number" id="roiLoss">—</p>
+          </div>
+          <div class="roi-result-row">
+            <p class="roi-label">Datapeople при вашей численности</p>
+            <p class="roi-number" id="roiCost">—</p>
+          </div>
+          <div class="roi-result-row roi-savings">
+            <p class="roi-label">Потенциальная экономия в год</p>
+            <p class="roi-number" id="roiSavings">—</p>
+          </div>
+          <button type="button" class="btn roi-print-btn" id="roiPrintBtn">Распечатать расчёт</button>
+          <p class="roi-note">Оценка: стоимость замены сотрудника ≈ 7 окладов (найм, онбординг, потерянная скорость команды); экономия — на основе среднего снижения текучки на 34% у клиентов, которые выполняют рекомендации Datapeople. Ориентировочный расчёт, не оферта.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="roiPrintSheet">
+    <h2>Datapeople — расчёт ROI</h2>
+    <div class="roi-print-row">Сотрудников: <strong id="roiPrintEmployees">—</strong></div>
+    <div class="roi-print-row">Текучка стоит сейчас: <strong id="roiPrintLoss">—</strong></div>
+    <div class="roi-print-row">Datapeople в год: <strong id="roiPrintCost">—</strong></div>
+    <div class="roi-print-row">Потенциальная экономия в год: <strong id="roiPrintSavings">—</strong></div>
+  </div>
+
+  <section class="proof">
+    <div class="wrap">
+      <div class="reveal" style="display:flex; gap:48px; flex-wrap:wrap;">
+        <div class="proof-stat">
+          <p class="number">78</p>
+          <p class="caption">компаний уже видят, кому нужна поддержка, заранее</p>
+        </div>
+        <div class="proof-stat">
+          <p class="number">-34<sup>%</sup></p>
+          <p class="caption">снижение текучки за 6 месяцев у клиентов, которые выполняют рекомендации</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <blockquote>
+          <p>Текучка снизилась с 18% до 11% за 8 месяцев. Экономия — 47 млн ₽ в год.</p>
+        </blockquote>
+        <p class="attribution"><strong>Росатом</strong> — кейс опубликован с письменного разрешения компании</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="integrations" id="integrations">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Подключается к вашим системам</h2>
+        <p>Без ручной выгрузки и сверки между системами.</p>
+      </div>
+      <div class="integrations-badges reveal">
+        <span class="integration-badge">1С:ЗУП</span>
+        <span class="integration-badge">SAP HR</span>
+        <span class="integration-badge">Битрикс24</span>
+        <span class="integration-badge">Slack</span>
+        <span class="integration-badge">Корпоративная почта</span>
+      </div>
+      <p class="integrations-foot reveal">Подключение данных — 3-4 дня. Первые результаты — через 2 недели.</p>
+    </div>
+  </section>
+
+  <section class="why-us" id="why-us">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Почему Datapeople</h2>
+      </div>
+      <div class="why-list">
+        <div class="why-card reveal">
+          <span class="why-tag">Данные в России</span>
+          <p>Серверы и обработка данных — на территории России.</p>
+        </div>
+        <div class="why-card reveal">
+          <span class="why-tag">Российские данные</span>
+          <p>Модель обучена на данных российских компаний, а не адаптирована с западного рынка.</p>
+        </div>
+        <div class="why-card reveal">
+          <span class="why-tag">Готовая интеграция с 1С</span>
+          <p>1С:ЗУП — из коробки, без доработок под каждого клиента.</p>
+        </div>
+        <div class="why-card reveal">
+          <span class="why-tag">Доступная цена</span>
+          <p>От 350 ₽ за сотрудника в месяц.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-form" id="form">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow">Заявка</p>
+        <h2 style="font-family:var(--font-display); font-weight:700; font-size:clamp(26px,3vw,34px); max-width:18ch;">Покажем на ваших данных</h2>
+        <p class="hero-sub" style="margin-top:16px; max-width:36ch;">15 минут, без презентации — сразу демо-доступ с примерами из вашей отрасли.</p>
+        <p class="pricing-anchor">От 350 ₽ за сотрудника в месяц</p>
+      </div>
+      <form class="form-card reveal" id="leadForm" action="https://formspree.io/f/mdarogww" method="POST">
+        <div class="field">
+          <label for="name">Имя</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Рабочая почта</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="company">Компания</label>
+          <input id="company" name="company" type="text" autocomplete="organization" required>
+        </div>
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <button class="btn btn-primary btn-block" type="submit">Оставить заявку</button>
+        <p class="form-foot">Никакого спама. Ответим в течение рабочего дня.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="footer-tag">Datapeople — HR-аналитика для компаний, которым важны люди, а не только цифры.</p>
+    <p class="footer-meta">© 2026 Datapeople</p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var grid = document.getElementById('riskGrid');
+    var riskIndices = [13, 21, 38, 47];
+    var note = grid.querySelector('.risk-note');
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < 64; i++){
+      var cell = document.createElement('div');
+      cell.className = 'cell';
+      if (riskIndices.indexOf(i) !== -1) cell.classList.add('is-risk');
+      frag.appendChild(cell);
+    }
+    grid.insertBefore(frag, note);
+  })();
+
+  (function(){
+    var targets = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) return;
+
+    document.documentElement.classList.add('js-reveal');
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    targets.forEach(function(t){ io.observe(t); });
+
+    // safety net: reveal anything still hidden after load in case an observer
+    // never fires (e.g. headless/full-page capture that skips real scrolling)
+    window.addEventListener('load', function(){
+      setTimeout(function(){
+        targets.forEach(function(t){ t.classList.add('is-visible'); });
+      }, 1200);
+    });
+  })();
+
+  document.getElementById('leadForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var form = this;
+    var btn = form.querySelector('button');
+    btn.disabled = true;
+    btn.textContent = 'Отправляем...';
+
+    var formData = new FormData(form);
+    if (window.dpRoiCalc){
+      var roi = window.dpRoiCalc;
+      formData.append('roi_employees', roi.employees);
+      formData.append('roi_salary', roi.salary);
+      formData.append('roi_turnover_pct', roi.turnoverPct);
+      formData.append('roi_loss_per_year', Math.round(roi.loss));
+      formData.append('roi_datapeople_cost_per_year', Math.round(roi.cost));
+      formData.append('roi_savings_per_year', Math.round(roi.savings));
+    }
+
+    fetch(form.action, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData
+    }).then(function(response){
+      if (response.ok){
+        btn.textContent = 'Заявка отправлена';
+        form.reset();
+      } else {
+        btn.textContent = 'Не получилось, попробуйте ещё раз';
+        btn.disabled = false;
+      }
+    }).catch(function(){
+      btn.textContent = 'Не получилось, попробуйте ещё раз';
+      btn.disabled = false;
+    });
+  });
+
+  (function(){
+    var REPLACEMENT_COST_MONTHS = 7;
+    var PRICE_PER_EMPLOYEE_MONTH = 350;
+    var TURNOVER_REDUCTION = 0.34;
+
+    var employeesInput = document.getElementById('roiEmployees');
+    var salaryInput = document.getElementById('roiSalary');
+    var turnoverInput = document.getElementById('roiTurnover');
+
+    var lossEl = document.getElementById('roiLoss');
+    var costEl = document.getElementById('roiCost');
+    var savingsEl = document.getElementById('roiSavings');
+
+    function formatRub(amount){
+      var millions = amount / 1000000;
+      if (millions >= 1){
+        return millions.toLocaleString('ru-RU', { maximumFractionDigits: 1 }) + ' млн ₽/год';
+      }
+      return Math.round(amount).toLocaleString('ru-RU') + ' ₽/год';
+    }
+
+    var lastCalc = null;
+
+    function recalc(){
+      var employees = Math.max(0, Number(employeesInput.value) || 0);
+      var salary = Math.max(0, Number(salaryInput.value) || 0);
+      var turnoverPct = Math.min(100, Math.max(0, Number(turnoverInput.value) || 0));
+
+      var leavingPerYear = employees * (turnoverPct / 100);
+      var loss = leavingPerYear * salary * REPLACEMENT_COST_MONTHS;
+      var cost = employees * PRICE_PER_EMPLOYEE_MONTH * 12;
+      var savings = Math.max(0, loss * TURNOVER_REDUCTION - cost);
+
+      lossEl.textContent = formatRub(loss);
+      costEl.textContent = formatRub(cost);
+      savingsEl.textContent = formatRub(savings);
+
+      lastCalc = { employees: employees, salary: salary, turnoverPct: turnoverPct, loss: loss, cost: cost, savings: savings };
+      window.dpRoiCalc = lastCalc;
+    }
+
+    [employeesInput, salaryInput, turnoverInput].forEach(function(input){
+      input.addEventListener('input', recalc);
+    });
+    recalc();
+
+    window.addEventListener('afterprint', function(){
+      document.body.classList.remove('printing-roi');
+    });
+
+    document.getElementById('roiPrintBtn').addEventListener('click', function(){
+      if (!lastCalc) return;
+      document.getElementById('roiPrintEmployees').textContent = lastCalc.employees.toLocaleString('ru-RU');
+      document.getElementById('roiPrintLoss').textContent = formatRub(lastCalc.loss);
+      document.getElementById('roiPrintCost').textContent = formatRub(lastCalc.cost);
+      document.getElementById('roiPrintSavings').textContent = formatRub(lastCalc.savings);
+      document.body.classList.add('printing-roi');
+      window.print();
+    });
+  })();
+</script>
+
+</body>
+</html>
