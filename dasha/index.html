@@ -85,6 +85,11 @@
     object-fit:cover;
   }
 
+  .floater-inner.is-lux{
+    border-color:#FFD700;
+    box-shadow:0 14px 34px rgba(255,20,147,0.22), 0 0 0 1px rgba(255,215,0,0.5), 0 2px 10px rgba(255,215,0,0.35);
+  }
+
   .floater-inner.is-emoji{
     display:flex;
     align-items:center;
@@ -322,12 +327,19 @@
     'IMG_6874.jpg','IMG_7127.jpg','IMG_7223.jpg','IMG_7224.jpg'
   ];
 
+  // колечки и тачки для мотивации :)
+  var luxPhotos = [
+    'bulgari_ring_1.jpg','bulgari_ring_2.jpg',
+    'audi_r8.jpg','audi_rs6.jpg','audi_q8.jpg','audi_etron_gt.jpg'
+  ];
+
   // стоматология, чипсы, конфеты, газировка, паштет и прочие хочушки
   var emojiItems = [
     '🦷','🪥','🍟','🍬','🍭','🥤','🧃','🥫','🍫','🍿','🌭','🍕'
   ];
 
   var items = photos.map(function(file){ return { type: 'photo', value: file }; })
+    .concat(luxPhotos.map(function(file){ return { type: 'photo', value: file, lux: true }; }))
     .concat(emojiItems.map(function(e){ return { type: 'emoji', value: e }; }));
 
   var field = document.getElementById('photoField');
@@ -340,7 +352,7 @@
     outer.className = 'floater';
     if (i % 2 === 0) outer.classList.add('is-hide-mobile');
 
-    var size = item.type === 'photo' ? Math.round(rand(110, 200)) : Math.round(rand(56, 96));
+    var size = item.lux ? Math.round(rand(130, 220)) : (item.type === 'photo' ? Math.round(rand(110, 200)) : Math.round(rand(56, 96)));
     var top = rand(-4, 92);
     var left = rand(-4, 92);
     var duration = rand(14, 26);
@@ -359,6 +371,7 @@
 
     var inner = document.createElement('div');
     inner.className = 'floater-inner';
+    if (item.lux) inner.classList.add('is-lux');
     inner.style.width = '100%';
     inner.style.height = '100%';
 
